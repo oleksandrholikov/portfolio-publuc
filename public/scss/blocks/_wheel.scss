@@ -1,0 +1,84 @@
+.wheel{
+    width: 580px;
+    aspect-ratio: 1;
+    position: relative;
+    border-radius: var(--border-radius-circle);
+    animation: spin 10s linear infinite;
+    transition: animation-play-state 0.5s;
+    // background-color: aqua;
+    &-item{
+        width: 400px;
+        height: auto;
+        position: absolute;
+        &-aboutMe{
+            rotate: (-45deg);
+            top:var(--position-y);
+            left:var(--position-x);
+            &:hover{
+                top:var(--position-hover-y);
+                left:var(--position-hover-x);
+                transform: scale(1.1);
+
+            }
+        }
+        &-project{
+            rotate: (45deg);
+            top:var(--position-y);
+            right:var(--position-x);
+            &:hover{
+                top:var(--position-hover-y);
+                right:var(--position-hover-x);
+                transform: scale(1.1);
+
+            }
+        }
+        &-contact{
+            rotate:(-135deg);
+            left: var(--position-x);
+            bottom: var(--position-y);
+            &:hover{
+                bottom:var(--position-hover-y);
+                left:var(--position-hover-x);
+                transform: scale(1.1);
+
+            }
+        }
+        &-skils{
+            rotate: (135deg);
+            right: var(--position-x);
+            bottom: var(--position-y);
+            &:hover{
+                bottom:var(--position-hover-y);
+                right:var(--position-hover-x);
+                transform: scale(1.1);
+
+            }
+            
+        }
+        &>text{
+                fill: #fff;
+                font-size: 66px;
+                 pointer-events: none;                        
+        }
+        :hover{
+            cursor: pointer;            
+            fill: var(--color-hover);
+            transform-box: fill-box;
+            transform-origin: center center;
+            
+            
+        }
+
+    }
+    
+    &:hover {
+        animation-play-state: paused;
+    }
+
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
