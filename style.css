@@ -1,0 +1,268 @@
+@charset "UTF-8";
+/**
+  Нормализация блочной модели
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; }
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+  padding-left: 0; }
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0; }
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl):where([class]) {
+  margin-block: 0; }
+
+:where(dd[class]) {
+  margin-left: 0; }
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none; }
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+  list-style: none; }
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+  --paragraphMarginBottom: 24px;
+  margin-block: 0; }
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom); }
+
+/**
+  Упрощаем работу с изображениями
+ */
+img {
+  display: block;
+  max-width: 100%; }
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+  font: inherit; }
+
+html {
+ /**
+ Пригодится в большинстве ситуаций
+ (когда, например, нужно будет "прижать" футер к низу сайта)
+*/
+  height: 100%; }
+
+/**
+  Плавный скролл
+ */
+html,
+:has(:target) {
+  scroll-behavior: smooth; }
+
+body {
+ /**
+ Пригодится в большинстве ситуаций
+ (когда, например, нужно будет "прижать" футер к низу сайта)
+*/
+  min-height: 100%;
+ /**
+ Унифицированный интерлиньяж
+*/
+  line-height: 1.5; }
+
+/**
+  Приводим к единому цвету svg-элементы
+ */
+svg *[fill] {
+  fill: currentColor; }
+
+svg *[stroke] {
+  stroke: currentColor; }
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+  transition-property: fill, stroke; }
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important; } }
+:root {
+  /*COLORS*/
+  --color-bg-body:#E3E35D;
+  --color-white:#fff;
+  --color-dark:#000;
+  --color-element:#172AF4;
+  --color-hover:#6B278F;
+  --color-active:#151B54;
+  --color-bg-input:#C6C1C1;
+  --color-placeholder-text:#EAEAEA;
+  --color-focus: #0EAD00;
+  --color-error:#FF0000;
+  /*BORDER*/
+  --border: 3px solid var(var(--color-white));
+  --border-radius-small:20px;
+  --border-radius-medium:40px;
+  --border-radius-circle:50%;
+  /*PADDING-margin*/
+  --padding-input-x: 40px;
+  --padding-button: 20px;
+  /*Possition-wheel-sector*/
+  --position-x:-39px;
+  --position-y:59px;
+  --position-hover-x:-53px;
+  --position-hover-y:45px; }
+
+body {
+  background-color: var(--color-bg-body);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.button {
+  background-color: var(--color-element);
+  color: var(--color-white);
+  border: var(--border);
+  border-radius: var(--border-radius-medium);
+  padding: var(--padding-button);
+  cursor: pointer; }
+  .button:hover {
+    background-color: var(--color-hover);
+    border-color: transparent; }
+  .button:active {
+    background-color: var(--color-active);
+    border-color: transparent; }
+
+.active {
+  background-color: var(--color-active);
+  border-color: transparent; }
+
+.input {
+  background-color: var(--color-bg-input);
+  color: var(--color-white);
+  border: var(--border);
+  border-radius: var(--border-radius-small);
+  padding: var(--padding-input-y) var(--padding-input-x);
+  outline: none; }
+  .input::placeholder {
+    color: var(--color-placeholder-text); }
+  .input:focus {
+    border-color: var(--color-focus); }
+
+.display-hidden {
+  display: none; }
+.display-active {
+  display: flex; }
+
+/*-----@import-style-block-----*/
+/*-----@import-style-pages-----*/
+.wheel {
+  width: 580px;
+  aspect-ratio: 1;
+  position: relative;
+  border-radius: var(--border-radius-circle);
+  animation: spin 10s linear infinite;
+  transition: animation-play-state 0.5s; }
+  .wheel-item {
+    width: 400px;
+    height: auto;
+    position: absolute; }
+    .wheel-item-aboutMe {
+      rotate: -45deg;
+      top: var(--position-y);
+      left: var(--position-x); }
+      .wheel-item-aboutMe:hover {
+        top: var(--position-hover-y);
+        left: var(--position-hover-x);
+        transform: scale(1.1); }
+    .wheel-item-project {
+      rotate: 45deg;
+      top: var(--position-y);
+      right: var(--position-x); }
+      .wheel-item-project:hover {
+        top: var(--position-hover-y);
+        right: var(--position-hover-x);
+        transform: scale(1.1); }
+    .wheel-item-contact {
+      rotate: -135deg;
+      left: var(--position-x);
+      bottom: var(--position-y); }
+      .wheel-item-contact:hover {
+        bottom: var(--position-hover-y);
+        left: var(--position-hover-x);
+        transform: scale(1.1); }
+    .wheel-item-skils {
+      rotate: 135deg;
+      right: var(--position-x);
+      bottom: var(--position-y); }
+      .wheel-item-skils:hover {
+        bottom: var(--position-hover-y);
+        right: var(--position-hover-x);
+        transform: scale(1.1); }
+    .wheel-item > text {
+      fill: #fff;
+      font-size: 66px;
+      pointer-events: none; }
+    .wheel-item :hover {
+      cursor: pointer;
+      fill: var(--color-hover);
+      transform-box: fill-box;
+      transform-origin: center center; }
+  .wheel:hover {
+    animation-play-state: paused; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+/*# sourceMappingURL=style.css.map */
